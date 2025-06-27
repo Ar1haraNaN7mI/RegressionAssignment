@@ -13,8 +13,9 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # 设置中文字体支持
-plt.rcParams['font.sans-serif'] = ['SimHei']
-plt.rcParams['axes.unicode_minus'] = False
+plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial', 'SimHei']
+plt.rcParams['axes.unicode_minus'] = True
+plt.rcParams['font.family'] = 'sans-serif'
 
 # 加载数据
 print("正在加载数据...")

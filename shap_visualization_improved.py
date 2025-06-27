@@ -25,9 +25,10 @@ except ImportError:
     GEOPANDAS_AVAILABLE = False
     print("⚠️ Geopandas不可用，跳过地理空间分析")
 
-# 设置中文字体支持
-plt.rcParams['font.sans-serif'] = ['SimHei']
-plt.rcParams['axes.unicode_minus'] = False
+# 设置字体支持，确保正负号正确显示
+plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial', 'SimHei']
+plt.rcParams['axes.unicode_minus'] = True
+plt.rcParams['font.family'] = 'sans-serif'
 
 print("正在加载数据和重建模型...")
 df = pd.read_excel('cancerdeaths.xlsx')
@@ -250,12 +251,13 @@ for target_name in target_columns:
             print(f"保存: shap_interaction_{target_name}_{feature1}_vs_{feature2}.png")
             plt.close()
     
-    # 7. SHAP决策图 (Decision Plot) - 前10个样本
+    # 7. SHAP决策图 (Decision Plot) - 随机100个样本
     plt.figure(figsize=(12, 10))
-    sample_indices = list(range(min(10, len(X_sample))))
+    np.random.seed(42)  # 设置随机种子确保可重现
+    sample_indices = np.random.choice(len(X_sample), size=min(100, len(X_sample)), replace=False)
     shap.decision_plot(explainer.expected_value, shap_values[sample_indices], 
                       X_sample.iloc[sample_indices], feature_names=feature_columns, show=False)
-    plt.title(f'{target_name} - SHAP Decision Plot (First 10 Samples)')
+    plt.title(f'{target_name} - SHAP Decision Plot (Random 100 Samples)')
     plt.tight_layout()
     plt.savefig(f'shap_decision_{target_name}.png', dpi=300, bbox_inches='tight')
     print(f"保存: shap_decision_{target_name}.png")

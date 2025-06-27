@@ -11,9 +11,10 @@ import shap
 import warnings
 warnings.filterwarnings('ignore')
 
-# 设置中文字体支持
-plt.rcParams['font.sans-serif'] = ['SimHei']
-plt.rcParams['axes.unicode_minus'] = False
+# 设置字体支持，确保正负号正确显示
+plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial', 'SimHei']
+plt.rcParams['axes.unicode_minus'] = True
+plt.rcParams['font.family'] = 'sans-serif'
 
 print("正在加载数据和重建模型...")
 df = pd.read_excel('cancerdeaths.xlsx')
